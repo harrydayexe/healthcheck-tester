@@ -20,7 +20,7 @@ The `/testcontainersz` endpoint will always respond with a 200 and can be monito
 
 ```golang
 req := testcontainers.ContainerRequest{
-    Image:        "healthcheck-tester:latest",
+    Image:        "harrydayexe/healthcheck-tester:latest",
     ExposedPorts: []string{"80/tcp"},
     WaitingFor:   wait.ForHttp("/testcontainersz"),
 }
