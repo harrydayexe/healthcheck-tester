@@ -6,6 +6,7 @@ This container will start up and respond to requests on the following endpoints:
 - `/healthz`
 - `/readyz`
 - `/livez`
+- `/testcontainersz`
 
 ## Usage
 When starting the Docker container, you can specify 3 different environment variables to control the behavior of the container:
@@ -14,3 +15,13 @@ When starting the Docker container, you can specify 3 different environment vari
 - `LIVEZ=TRUE|FALSE` - If set to `TRUE`, the `/livez` endpoint will return a 200 status code. If set to `FALSE`, the `/livez` endpoint will return a 500 status code.
 
 The default value for each of these environment variables is `TRUE`.
+
+The `/testcontainersz` endpoint will always respond with a 200 and can be monitored by TestContainers for pod readiness in lieu of the healthz endpoint.
+
+```golang
+req := testcontainers.ContainerRequest{
+    Image:        "healthcheck-tester:latest",
+    ExposedPorts: []string{"80/tcp"},
+    WaitingFor:   wait.ForHttp("/testcontainersz"),
+}
+```
