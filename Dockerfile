@@ -33,6 +33,9 @@ ENV LIVEZ=TRUE
 ENV HEALTHZ=TRUE
 ENV READYZ=TRUE
 
+# Set USER
+USER 1001:1001
+
 # Run the Go application
 CMD ["./main"]
 
