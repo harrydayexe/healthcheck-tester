@@ -36,6 +36,6 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/healthcheck-tester:${{ github.event.release.tag_name }}-${{ matrix.architecture }}
-            ${{ secrets.DOCKERHUB_USERNAME }}/healthcheck-tester:latest-${{ matrix.architecture }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/healthcheck-tester:${{ github.event.release.tag_name }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/healthcheck-tester:latest
           platforms: linux/${{ matrix.architecture }}
