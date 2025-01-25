@@ -19,11 +19,17 @@ FROM alpine:3.20
 # Install the necessary libraries to run Go applications
 RUN apk add --no-cache ca-certificates
 
+# Create a non-root user and group
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+
 # Set the working directory
-WORKDIR /root/
+WORKDIR /home/appuser/
 
 # Copy the compiled Go binary from the builder image
 COPY --from=builder /app/main .
+
+# Change ownership of the application binary to the non-root user
+RUN chown appuser:appgroup main && chmod +x main
 
 # Expose the port the app is running on
 EXPOSE 80
@@ -33,8 +39,8 @@ ENV LIVEZ=TRUE
 ENV HEALTHZ=TRUE
 ENV READYZ=TRUE
 
-# Set USER
-USER 1001:1001
+# Switch to the non-root user
+USER appuser
 
 # Run the Go application
 CMD ["./main"]
