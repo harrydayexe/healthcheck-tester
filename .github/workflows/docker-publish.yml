@@ -8,9 +8,6 @@ jobs:
   push_to_registry:
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        architecture: [amd64, arm64]
     permissions:
       packages: write
       contents: read
@@ -38,4 +35,4 @@ jobs:
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/healthcheck-tester:${{ github.event.release.tag_name }}
             ${{ secrets.DOCKERHUB_USERNAME }}/healthcheck-tester:latest
-          platforms: linux/${{ matrix.architecture }}
+          platforms: linux/amd64,linux/arm64
